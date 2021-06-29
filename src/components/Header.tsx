@@ -2,6 +2,7 @@ import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+import { makeStyles } from '@material-ui/core/styles';
 
 interface Props {
   children: React.ReactElement;
@@ -19,12 +20,23 @@ function ElevationScroll(props: Props) {
   });
 }
 
+const useStyles = makeStyles((theme) => ({
+  toolbar: {
+    ...theme.mixins.toolbar,
+  },
+}));
+
 export default function Header() {
+  const classes = useStyles();
+
   return (
-    <ElevationScroll>
-      <AppBar>
-        <Toolbar>LingVuDev</Toolbar>
-      </AppBar>
-    </ElevationScroll>
+    <>
+      <ElevationScroll>
+        <AppBar>
+          <Toolbar>LingVuDev</Toolbar>
+        </AppBar>
+      </ElevationScroll>
+      <div className={classes.toolbar}></div>
+    </>
   );
 }
