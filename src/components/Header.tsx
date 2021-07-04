@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Tabs from '@material-ui/core/Tabs';
@@ -6,6 +6,8 @@ import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 interface Props {
   children: React.ReactElement;
@@ -37,6 +39,34 @@ const useStyles = makeStyles((theme) => ({
 export default function Header() {
   const classes = useStyles();
   const [value, setValue] = useState(0);
+  const location = useLocation();
+  const links = [
+    {
+      to: '/',
+      label: 'Home',
+    },
+    {
+      to: '/services',
+      label: 'Services',
+    },
+    {
+      to: '/revolution',
+      label: 'The Revolution',
+    },
+    {
+      to: '/about',
+      label: 'About us',
+    },
+    {
+      to: '/contact',
+      label: 'Contact us',
+    },
+  ];
+
+  useEffect(() => {
+    const currentLinkIndex = links.findIndex((link) => location.pathname === link.to);
+    setValue(currentLinkIndex);
+  }, []);
 
   return (
     <>
@@ -49,11 +79,9 @@ export default function Header() {
               value={value}
               onChange={(e, value) => setValue(value)}
             >
-              <Tab className={`${classes.toolbar}`} label="Home" />
-              <Tab className={`${classes.toolbar}`} label="Services" />
-              <Tab className={`${classes.toolbar}`} label="The Revolution" />
-              <Tab className={`${classes.toolbar}`} label="About us" />
-              <Tab className={`${classes.toolbar}`} label="Contact us" />
+              {links.map((link) => (
+                <Tab className={`${classes.toolbar}`} component={Link} {...link} />
+              ))}
             </Tabs>
             <Button className={classes.button} variant="contained" color="secondary">
               Free Estimate
