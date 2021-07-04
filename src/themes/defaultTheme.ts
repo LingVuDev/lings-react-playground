@@ -1,4 +1,5 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+// https://stackoverflow.com/a/64135466/10114038
+import { unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core/styles';
 
 const blurple = '#5865f2';
 const green = '#57f287';
